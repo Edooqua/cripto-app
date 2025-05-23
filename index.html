@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcolo Guadagno Cripto</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #2c3e50);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 35px 30px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      width: 90%;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: 500;
+      display: block;
+      margin-top: 15px;
+      color: #f0f0f0;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      box-sizing: border-box;
+      background: #ffffffcc;
+      color: #000;
+    }
+
+    input::placeholder {
+      color: #777;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 14px;
+      width: 100%;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #2ecc71;
+    }
+
+    #risultato {
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffffff;
+      white-space: pre-line;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #dddddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🪙 Calcola il tuo guadagno</h2>
+    
+    <label>Quantità cripto:</label>
+    <input type="number" id="quantita" placeholder="es. 2.5">
+    
+    <label>Prezzo d'acquisto (facoltativo):</label>
+    <input type="number" id="acquisto" placeholder="es. 18000">
+  
+    <label>Prezzo di vendita:</label>
+    <input type="number" id="vendita" placeholder="es. 22000">
+  
+    <label>Percentuale da sottrarre (es. tasse o fee):</label>
+    <input type="number" id="percentuale" placeholder="es. 5 (Non inserire il simbolo %)">
+  
+    <button onclick="calcola()">Calcola</button>
+  
+    <div id="risultato"></div>
+
+    <div class="footer">🛠️ Sviluppato da Edo_Rosa</div>
+  </div>
+
+  <script>
+    function calcola() {
+      let qta = parseFloat(document.getElementById('quantita').value);
+      let prezzoAcq = parseFloat(document.getElementById('acquisto').value) || 0;
+      let prezzoVend = parseFloat(document.getElementById('vendita').value);
+      let percentuale = parseFloat(document.getElementById('percentuale').value) || 0;
+
+      if (!qta || !prezzoVend) {
+        document.getElementById('risultato').innerText = "Inserisci quantità e prezzo di vendita.";
+        return;
+      }
+
+      let ricavoLordo = qta * prezzoVend;
+      let spese = ricavoLordo * (percentuale / 100);
+      let ricavoNetto = ricavoLordo - spese;
+
+      let costoTotale = qta * prezzoAcq;
+      let guadagno = prezzoAcq ? ricavoNetto - costoTotale : "N/A";
+
+      let testo = `💰 Ricavo netto: ${ricavoNetto.toFixed(2)}€`;
+      if (prezzoAcq) testo += `\n📈 Guadagno netto: ${guadagno.toFixed(2)}€`;
+
+      document.getElementById('risultato').innerText = testo;
+    }
+  </script>
+</body>
+</html>
